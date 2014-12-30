@@ -1,0 +1,7 @@
+name             'aws_motd'
+maintainer       'github@jamesjj.net'
+maintainer_email 'github@jamesjj.net'
+license          'MIT'
+description      'Installs/Configures aws_motd'
+long_description      'Installs/Configures aws_motd'
+version          '0.1.0'
