@@ -1,8 +1,17 @@
+#!/bin/sh
 
+PATH='/bin:/usr/bin'
+
+HOSTNAME=`hostname -f`
+OS=`cat /etc/system-release`
+
+cat - <EOF
 ===
-Details for: <%= node[:fqdn] %>
+Details for: $HOSTNAME
 Information last updated: <%= DateTime.now.httpdate %>
-OS: <% begin print File.read('/etc/system-release') rescue print 'unknown' end -%>
+OS: $OS
 Location: <%= node['aws_motd']['mapped']['accountId'] %>: <%= node['aws_motd']['aws']['availabilityZone'] %>
 Instance: <%= node['aws_motd']['aws']['instanceId'] %> (<%= node['aws_motd']['aws']['privateIp'] %>)
 ====
+
+EOF

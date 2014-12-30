@@ -2,7 +2,7 @@
 ===
 Details for: <%= node[:fqdn] %>
 Information last updated: <%= DateTime.now.httpdate %>
-OS: <%= File.read('/etc/system-release') rescue 'unknown' %>
+OS: <%= File.read('/etc/system-release').chomp rescue 'unknown' %>
 Location: <%= node['aws_motd']['mapped']['accountId'] %>: <%= node['aws_motd']['aws']['availabilityZone'] %>
 Instance: <%= node['aws_motd']['aws']['instanceId'] %> (<%= node['aws_motd']['aws']['privateIp'] %>)
 ====
