@@ -5,12 +5,13 @@ PATH='/bin:/usr/bin'
 HOSTNAME=`hostname -f`
 OS=`cat /etc/system-release`
 
-cat - <EOF
-===
+cat - <<EOF
+
+====
 Details for: $HOSTNAME
 Information last updated: <%= DateTime.now.httpdate %>
 OS: $OS
-Location: <%= node['aws_motd']['mapped']['accountId'] %>: <%= node['aws_motd']['aws']['availabilityZone'] %>
+Location: <%= node['aws_motd']['mapped']['accountId'] %>, <%= node['aws_motd']['aws']['availabilityZone'] %>
 Instance: <%= node['aws_motd']['aws']['instanceId'] %> (<%= node['aws_motd']['aws']['privateIp'] %>)
 ====
 
