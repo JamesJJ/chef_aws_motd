@@ -7,7 +7,7 @@ ruby_block "Read AWS Attributes" do
   block do
     require 'net/http'
     require 'json'
-    node.default['aws_motd']['aws_motd_successfully_parsed_aws_data'] = nil
+    node.override['aws_motd']['aws_motd_successfully_parsed_aws_data'] = nil
     http = Net::HTTP.new("169.254.169.254")
     http.open_timeout = 8
     http.read_timeout = 8
@@ -17,7 +17,7 @@ ruby_block "Read AWS Attributes" do
     end
     begin
       instance_data = JSON.parse(instance_data_req.body)
-      node.default['aws_motd']['aws_motd_successfully_parsed_aws_data'] = true
+      node.override['aws_motd']['aws_motd_successfully_parsed_aws_data'] = true
     rescue
       instance_data = Hash.new()
     end
@@ -37,9 +37,6 @@ template node['aws_motd']['motd'] do
   mode '0644'
   owner 'root'
   group 'root'
-  variables(
-    :has_aws_data => (node['aws_motd']['aws_motd_successfully_parsed_aws_data'].nil? ? nil : true)
-  )
 end
 
 _motd_script = node['aws_motd']['motd_script']
@@ -49,9 +46,6 @@ template _motd_script do
   mode '0755'
   owner 'root'
   group 'root'
-  variables(
-    :has_aws_data => (node['aws_motd']['aws_motd_successfully_parsed_aws_data'].nil? ? nil : true)
-  )
   not_if do !File.directory?(_motd_script_path) end
 end 
 
