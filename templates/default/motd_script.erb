@@ -11,8 +11,11 @@ cat - <<EOF
 Details for: $HOSTNAME
 Information last updated: <%= DateTime.now.httpdate %>
 OS: $OS
+<% if node['aws_motd']['aws_motd_successfully_parsed_aws_data'].nil? %>-- NOT AWS --
+<% else %>
 Location: <%= node['aws_motd']['mapped']['accountId'] %>, <%= node['aws_motd']['aws']['availabilityZone'] %>
 Instance: <%= node['aws_motd']['aws']['instanceId'] %> (<%= node['aws_motd']['aws']['privateIp'] %>)
+<% end %>
 ====
 
 EOF
