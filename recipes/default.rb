@@ -37,7 +37,7 @@ template node['aws_motd']['motd'] do
   owner 'root'
   group 'root'
   variables(
-    :has_aws_data = node['aws_motd']['aws_motd_successfully_parsed_aws_data'] ? true : nil
+    :has_aws_data => node['aws_motd']['aws_motd_successfully_parsed_aws_data'] ? true : nil
   )
 end
 
@@ -49,7 +49,7 @@ template _motd_script do
   owner 'root'
   group 'root'
   variables(
-    :has_aws_data = node['aws_motd']['aws_motd_successfully_parsed_aws_data'] ? true : nil
+    :has_aws_data => node['aws_motd']['aws_motd_successfully_parsed_aws_data'] ? true : nil
   )
   not_if do !File.directory?(_motd_script_path) end
 end 
