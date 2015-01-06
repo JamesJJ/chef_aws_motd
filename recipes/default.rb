@@ -13,10 +13,10 @@ ruby_block "Read AWS Attributes" do
     begin
       instance_data_req = http.get('/latest/dynamic/instance-identity/document')
     rescue StandardError
-      return
     end
     begin
       instance_data = JSON.parse(instance_data_req.body)
+      node.override['aws_motd']['aws_motd_successfully_parsed_aws_data'] = true
     rescue
       instance_data = Hash.new()
     end
@@ -36,6 +36,9 @@ template node['aws_motd']['motd'] do
   mode '0644'
   owner 'root'
   group 'root'
+  variables(
+    :has_aws_data = node['aws_motd']['aws_motd_successfully_parsed_aws_data'] ? true : nil
+  )
 end
 
 _motd_script = node['aws_motd']['motd_script']
@@ -45,6 +48,9 @@ template _motd_script do
   mode '0755'
   owner 'root'
   group 'root'
+  variables(
+    :has_aws_data = node['aws_motd']['aws_motd_successfully_parsed_aws_data'] ? true : nil
+  )
   not_if do !File.directory?(_motd_script_path) end
 end 
 
