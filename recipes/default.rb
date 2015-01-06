@@ -18,7 +18,7 @@ ruby_block "Read AWS Attributes" do
     begin
       instance_data = JSON.parse(instance_data_req.body)
     rescue
-      return
+      instance_data = Hash.new()
     end
     instance_data.each do |_k,_v|
       node.default['aws_motd']['aws'][_k] = _v

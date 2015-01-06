@@ -3,7 +3,9 @@
 Details for: <%= node[:fqdn] %>
 Information last updated: <%= DateTime.now.httpdate %>
 OS: <%= File.read('/etc/system-release').chomp rescue 'unknown' %>
+<% if @has_aws_data.nil? begin -%>-- NOT AWS --<% else -%>
 Location: <%= node['aws_motd']['mapped']['accountId'] %>, <%= node['aws_motd']['aws']['availabilityZone'] %>
 Instance: <%= node['aws_motd']['aws']['instanceId'] %> (<%= node['aws_motd']['aws']['privateIp'] %>)
+<% end -%>
 ====
 
